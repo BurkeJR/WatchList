@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import InputRequired, EqualTo, Length
+from wtforms.fields.core import IntegerField, SelectField
+from wtforms.validators import InputRequired, EqualTo, Length, NumberRange
 
 class LoginForm(FlaskForm):
     username = StringField("Username: ", validators=[InputRequired()])
@@ -18,6 +19,7 @@ class RegisterForm(FlaskForm):
 class UpdateUsername(FlaskForm):
     username = StringField("Old Username: ", validators=[InputRequired()])
     newUsername = StringField("New Username: ", validators=[InputRequired()])
+
     submit = SubmitField("Update")
 
 class UpdatePassword(FlaskForm):
@@ -26,3 +28,12 @@ class UpdatePassword(FlaskForm):
     confirmNewPassword = PasswordField("Confirm New Password: ", validators=[InputRequired(), EqualTo("newPassword")])
 
     submit = SubmitField("Update")
+
+class AddShow(FlaskForm):
+    title = StringField("Title: ", validators=[InputRequired(), Length(max=256)])
+    rating = IntegerField("Rating(_/10): ", validators=[NumberRange(min=0, max=10)])
+    progress = SelectField("Progress: ", 
+        choices=["Finished", "In Progress", "Waiting", "Plan to"],
+        validators=[InputRequired()])
+
+    submit = SubmitField("Add")

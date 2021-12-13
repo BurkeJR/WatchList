@@ -11,8 +11,11 @@ from flask_login import current_user
 from hasher import UpdatedHasher
 import os
 import sys
-from loginForm import LoginForm
-from loginForm import RegisterForm
+from forms import LoginForm
+from forms import RegisterForm
+from forms import UpdatePassword
+from forms import UpdateUsername
+from forms import AddShow
 
 # get path
 scriptdir = os.path.abspath(os.path.dirname(__file__))
@@ -53,7 +56,7 @@ class User(UserMixin, db.Model):
     __tablename__ = "Users"
     id = db.Column(db.Integer, primary_key=True)
     password_hash = db.Column(db.LargeBinary)
-    username = db.Column()
+    username = db.Column(db.Unicode)
 
     @property
     def password(self):
@@ -66,16 +69,33 @@ class User(UserMixin, db.Model):
     def verify_password(self, pwd):
         return pwd_hasher.check(pwd, self.password_hash)
 
+class Show(db.Model):
+    __tablename__ = "Shows"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("Users.id"))
+    title = db.Column(db.Unicode, nullable=False)
+    rating = db.Column(db.Integer, nullable=True)
+    progress = db.Column(db.Unicode, nullable=False)
+
+# db.drop_all()
+# db.create_all()
+
 # """
 
 
 @app.route("/")
 def index():
-    return redirect(url_for("home"))
+    return redirect(url_for("get_home"))
 
-@app.get("home")
+@app.get("/home/")
 def get_home():
-    return render_template("home.j2")
+    return render_template("home.j2", current_user=current_user)
+
+@app.get("/shows/")
+@login_required
+def get_shows():
+    shows = Show.query.filter(Show.user_id == current_user.id).all()
+    return render_template("shows.j2")
 
 @app.get("/register/")
 def get_register():
@@ -120,7 +140,7 @@ def post_login():
             # redirect to page they wanted or to home page
             next = request.args.get("next")
             if next is None or not next.startswith('/'):
-                next = url_for('home')
+                next = url_for('get_home')
 
             return redirect(next)
         # if user doesn't exist or password is wrong
@@ -132,3 +152,33 @@ def post_login():
         for field, error in form.errors.items():
             flash(f"{field}: {error}")
         return redirect(url_for('get_login'))
+
+@app.get('/logout/')
+@login_required
+def get_logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+@ app.get("/changeUsername/")
+def get_changeUsername():
+    form = UpdateUsername()
+    return render_template("updateUsername.j2", current_user=current_user, form=form)
+
+
+@ app.post("/changeUsername/")
+def post_changeUsername():
+    form = UpdateUsername()
+    if form.validate():
+        # check if existing account has this email
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None:
+            flash("The old username that was submitted does not match your account")
+            return redirect(url_for('get_changeUsername'))
+        # username are both not already being used, create new user
+        user.username = form.newUsername.data
+        db.session.commit()
+        return render_template("profile.j2", current_user=current_user, form=form)
+    else:
+        for field, error in form.errors.items():
+            flash(f"{field}: {error}")
+        return redirect(url_for('get_changeUsername'))
