@@ -95,7 +95,27 @@ def get_home():
 @login_required
 def get_shows():
     shows = Show.query.filter(Show.user_id == current_user.id).all()
-    return render_template("shows.j2")
+    return render_template("shows.j2", shows=shows)
+
+@app.get("/shows/add/")
+@login_required
+def get_add_show():
+    form = AddShow()
+    return render_template("addShow.j2", form=form)
+
+@app.post("/shows/add/")
+@login_required
+def post_add_show():
+    form = AddShow()
+    if form.validate():
+        db.session.add(Show(user_id= current_user.id,title=form.title.data, 
+            rating=form.rating.data, progress=form.progress.data))
+        db.session.commit()
+        return redirect(url_for("get_shows"))
+    else:
+        for field, error in form.errors.items():
+            flash(f"{field}: {error}")
+        return redirect(url_for('get_add_show'))
 
 @app.get("/register/")
 def get_register():

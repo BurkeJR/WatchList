@@ -1,0 +1,17 @@
+.popup .content {
+    width: 300px;
+    height: 450px;
+    z-index: 2;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-150%) scale(0);
+    padding: 20px;
+    border-radius: 20px;
+    background: #262626;
+    position: absolute;
+    box-shadow:  38px 38px 56px #1e1e1e, 
+                -25px -25px 38px #1e1e1e;
+    z-index: 1;
+}
+

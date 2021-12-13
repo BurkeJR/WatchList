@@ -10,7 +10,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 class RegisterForm(FlaskForm):
-    username = StringField("Username: ", validators=[InputRequired()])
+    username = StringField("Username: ", validators=[InputRequired(), Length(min=4, max=32)])
     password = PasswordField("Password: ", validators=[InputRequired(), Length(min=8, max=256)])
     confirm_password = PasswordField("Confirm Password: ", validators=[InputRequired(), EqualTo("password")])
 
@@ -18,7 +18,7 @@ class RegisterForm(FlaskForm):
 
 class UpdateUsername(FlaskForm):
     username = StringField("Old Username: ", validators=[InputRequired()])
-    newUsername = StringField("New Username: ", validators=[InputRequired()])
+    newUsername = StringField("New Username: ", validators=[InputRequired(), Length(min=4, max=32)])
 
     submit = SubmitField("Update")
 
