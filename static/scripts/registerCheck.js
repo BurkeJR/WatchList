@@ -15,7 +15,7 @@ function checkPassword(){
     let confPass = document.getElementById("confPass");
 
     // if not long enough
-    if (pass.value.length < 8){
+    if (pass.value.length < 4){
         pass.setCustomValidity("Password needs to be 8 or more characters");
     }
     // if too long

@@ -4,32 +4,25 @@
 
 # imports
 from flask import Flask, request, render_template, redirect, url_for, flash
-from flask_login import UserMixin, LoginManager, login_required
+from flask_login import LoginManager, login_required
 from flask_login.utils import login_user, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import current_user
-from hasher import UpdatedHasher
-import os
-import sys
+import os, sys
 from forms import LoginForm
 from forms import RegisterForm
 from forms import UpdatePassword
 from forms import UpdateUsername
 from forms import AddShow
+from db import User
+from db import Show
 
 # get path
 scriptdir = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(scriptdir)
 
-# get db and pepper file
+# get db file
 dbfile = os.path.join(scriptdir, 'watchList.sqlite3')
-pepfile = os.path.join(scriptdir, "pepper.bin")
-
-# get pepper key
-with open(pepfile, 'rb') as fin:
-    pepper_key = fin.read()
-
-pwd_hasher = UpdatedHasher(pepper_key)
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -50,45 +43,12 @@ def load_user(uid):
     return User.query.get(int(uid))
 
 
-# """
-
-class User(UserMixin, db.Model):
-    __tablename__ = "Users"
-    id = db.Column(db.Integer, primary_key=True)
-    password_hash = db.Column(db.LargeBinary)
-    username = db.Column(db.Unicode)
-
-    @property
-    def password(self):
-        raise AttributeError("password is a write-only attribute")
-
-    @password.setter
-    def password(self, pwd):
-        self.password_hash = pwd_hasher.hash(pwd)
-
-    def verify_password(self, pwd):
-        return pwd_hasher.check(pwd, self.password_hash)
-
-class Show(db.Model):
-    __tablename__ = "Shows"
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("Users.id"))
-    title = db.Column(db.Unicode, nullable=False)
-    rating = db.Column(db.Integer, nullable=True)
-    progress = db.Column(db.Unicode, nullable=False)
-
-# db.drop_all()
-# db.create_all()
-
-# """
-
-
 @app.route("/")
 def index():
-    return redirect(url_for("get_home"))
+    return redirect(url_for("home"))
 
-@app.get("/home/")
-def get_home():
+@app.route("/home/")
+def home():
     return render_template("home.j2", current_user=current_user)
 
 @app.get("/shows/")
@@ -147,7 +107,6 @@ def get_login():
     form = LoginForm()
     return render_template("login.j2", form=form, registerLink=url_for('get_register'))
 
-
 @app.post("/login/")
 def post_login():
     form = LoginForm()
@@ -160,7 +119,7 @@ def post_login():
             # redirect to page they wanted or to home page
             next = request.args.get("next")
             if next is None or not next.startswith('/'):
-                next = url_for('get_home')
+                next = url_for('home')
 
             return redirect(next)
         # if user doesn't exist or password is wrong
@@ -179,13 +138,12 @@ def get_logout():
     logout_user()
     return redirect(url_for('index'))
 
-@ app.get("/changeUsername/")
+@app.get("/changeUsername/")
 def get_changeUsername():
     form = UpdateUsername()
     return render_template("updateUsername.j2", current_user=current_user, form=form)
 
-
-@ app.post("/changeUsername/")
+@app.post("/changeUsername/")
 def post_changeUsername():
     form = UpdateUsername()
     if form.validate():
@@ -202,3 +160,9 @@ def post_changeUsername():
         for field, error in form.errors.items():
             flash(f"{field}: {error}")
         return redirect(url_for('get_changeUsername'))
+
+@login_required
+@app.route("/profile/")
+def profile():
+    return render_template("profile.j2", current_user=current_user)
+

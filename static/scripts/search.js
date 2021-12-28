@@ -12,7 +12,7 @@ function search() {
 	const table = document.querySelector("table");
 
     for (let r = 1; r < table.rows.length; r++){
-		table.rows[r].classList.remove("highlight");
+		table.rows[r].classList.remove("hide");
 	}
 	if (str !== "") {
 		// iterate over all rows after the first one (don't search headings)
@@ -28,8 +28,8 @@ function search() {
 					matchFound = true;
 				}
 			}
-			if (matchFound){
-				row.classList.add("highlight");
+			if (!matchFound){
+				row.classList.add("hide");
 			}
 
 		}

@@ -11,6 +11,6 @@ td, th {
 	border-width: 2px;
 }
 
-.highlight {
-	background-color: yellow;
+.hide {
+	display: none
 }
