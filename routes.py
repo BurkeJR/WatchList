@@ -16,6 +16,12 @@ from forms import UpdateUsername
 from forms import AddShow
 from db import User
 from db import Show
+import math
+
+# round down function
+def round_down(n, decimals=0):
+    multiplier = 10 ** decimals
+    return math.floor(n * multiplier) / multiplier
 
 # get path
 scriptdir = os.path.abspath(os.path.dirname(__file__))
@@ -69,7 +75,7 @@ def post_add_show():
     form = AddShow()
     if form.validate():
         db.session.add(Show(user_id= current_user.id,title=form.title.data, 
-            rating=form.rating.data, progress=form.progress.data))
+            rating=round_down(form.rating.data, 2), progress=form.progress.data))
         db.session.commit()
         return redirect(url_for("get_shows"))
     else:

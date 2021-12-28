@@ -31,7 +31,7 @@ class UpdatePassword(FlaskForm):
 
 class AddShow(FlaskForm):
     title = StringField("Title: ", validators=[InputRequired(), Length(max=256)])
-    rating = DecimalField("Rating(_/10): ", validators=[NumberRange(min=0, max=10)], places=1)
+    rating = DecimalField("Rating(_/10): ", validators=[NumberRange(min=0, max=10)])
     progress = SelectField("Progress: ", 
         choices=["Finished", "In Progress", "Waiting", "Plan to"],
         validators=[InputRequired()])

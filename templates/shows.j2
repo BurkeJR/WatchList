@@ -38,7 +38,13 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6">
-                        <input id="search-bar" type="text" name="search" placeholder="Search">
+                        <select name="search-by" id="search-by">
+                            <option value="all"> All </option>
+                            <option value="title"> Title </option>
+                            <option value="rating"> Rating </option>
+                            <option value="progress"> Progress </option>
+                        </select>
+                        <input name="search-bar" id="search-bar" type="text" placeholder="Search">
                     </div>
                     <div class="col-md-6">
                         <a href="/shows/add/"> Add Show </a>
