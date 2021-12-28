@@ -9,7 +9,7 @@
         <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
         <script src="/static/scripts/search.js"></script>
         <link rel="stylesheet" href= "/static/styles/watchList.css">
-        <!-- <link rel="stylesheet" href="/static/styles/popup.css"> -->
+        <link rel="stylesheet" href="/static/styles/popup.css">
     </head>
 
     <body>
@@ -27,17 +27,21 @@
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/logout/">Logout</a>
+                            <a class="nav-link" href="/profile/"> Profile </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout/"> Logout </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <main>
+        <main class="container-fluid m-1">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6">
+                        <label for="search-by"> Search By: </label>
                         <select name="search-by" id="search-by">
                             <option value="all"> All </option>
                             <option value="title"> Title </option>
@@ -47,7 +51,9 @@
                         <input name="search-bar" id="search-bar" type="text" placeholder="Search">
                     </div>
                     <div class="col-md-6">
-                        <a href="/shows/add/"> Add Show </a>
+                        <!-- <a href="/shows/add/" class="btn btn-info" role="button"> Add Show </a> -->
+                        <button id="btnStart" type="button" class="btn btn-primary" data-toggle="modal" 
+                            data-target="#formModal"> Add Show </button>
                     </div>
                 </div>
             </div>       
@@ -66,6 +72,11 @@
                 </tr>
                 {% endfor %}
             </table>
+
+            <!-- Modal for adding show -->
+            <div class="modal fade" id="showFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+
+            </div>
         </main>
 
     </body>
