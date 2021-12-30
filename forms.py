@@ -32,8 +32,13 @@ class UpdatePassword(FlaskForm):
 class AddShow(FlaskForm):
     title = StringField("Title: ", validators=[InputRequired(), Length(max=256)])
     rating = DecimalField("Rating(_/10): ", validators=[NumberRange(min=0, max=10)])
+
     progress = SelectField("Progress: ", 
-        choices=["Finished", "In Progress", "Waiting", "Plan to"],
+        choices=["Finished", "In Progress", "Waiting", "Plan to", "Custom"],
         validators=[InputRequired()])
+
+    season = IntegerField("Season: ", validators=[NumberRange(min=0)])
+    episode = IntegerField("Episode: ", validators=[NumberRange(min=0)])
+    custom = StringField("Custom Progress: ", validators=[Length(max=64)])
 
     submit = SubmitField("Add")

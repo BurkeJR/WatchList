@@ -10,8 +10,8 @@
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.bundle.js'></script>
         <script src="/static/scripts/search.js"></script>
+        <script src="/static/scripts/addShowCheck.js"></script>
         <link rel="stylesheet" href= "/static/styles/watchList.css">
-        <link rel="stylesheet" href="/static/styles/popup.css">
     </head>
 
     <header>
@@ -102,11 +102,18 @@
 
                             <div>
                                 {{ showForm.hidden_tag() }}
-                                <div class="form-label"> {{ showForm.title.label }} {{ showForm.title(id="title") }} </div>
-                                <div class="form-label"> {{ showForm.rating.label }} {{ showForm.rating(id="rating") }} </div>
-                                <div class="form-label"> {{ showForm.progress.label }} {{ showForm.progress(id="progress") }} </div>
+                                <div class="form-label"> {{ showForm.title.label }} {{ showForm.title(id="showTitle") }} </div>
+                                <div class="form-label"> {{ showForm.rating.label }} {{ showForm.rating(id="showRating") }} </div>
+                                <div class="form-label"> {{ showForm.progress.label }} {{ showForm.progress(id="showProgress") }} </div>
+
+                                <div id="inProgressDetails" class="hide">
+                                    <div> {{ showForm.season.label }} {{ showForm.season(id="showSeason") }} </div>
+                                    <div> {{ showForm.episode.label }} {{ showForm.episode(id="showEpisode") }} </div>
+                                </div>
+
+                                <div id="customProgress" class="hide"> {{ showForm.custom.label }} {{ showForm.custom() }} </div>
+
                                 
-                                <button class="btn btn-block"> {{ showForm.submit() }} </button>
                             </div>
 
                             <div class="modal-footer">
