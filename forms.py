@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.fields.core import DecimalField, IntegerField, SelectField
-from wtforms.validators import InputRequired, EqualTo, Length, NumberRange
+from wtforms.validators import InputRequired, EqualTo, Length, NumberRange, Optional
 
 class LoginForm(FlaskForm):
     username = StringField("Username: ", validators=[InputRequired()])
@@ -37,8 +37,8 @@ class AddShow(FlaskForm):
         choices=["Finished", "In Progress", "Waiting", "Plan to", "Custom"],
         validators=[InputRequired()])
 
-    season = IntegerField("Season: ", validators=[NumberRange(min=0)])
-    episode = IntegerField("Episode: ", validators=[NumberRange(min=0)])
-    custom = StringField("Custom Progress: ", validators=[Length(max=64)])
+    season = IntegerField("Season: ", validators=[NumberRange(min=0), Optional()])
+    episode = IntegerField("Episode: ", validators=[NumberRange(min=0), Optional()])
+    custom = StringField("Custom Progress: ", validators=[Length(max=64), Optional()])
 
     submit = SubmitField("Add")

@@ -3,6 +3,7 @@
 """
 
 # imports
+from logging import log
 from flask import Flask, request, render_template, redirect, url_for, flash
 from flask_login import LoginManager, login_required
 from flask_login.utils import login_user, logout_user, current_user
@@ -61,29 +62,37 @@ def home():
 @login_required
 def get_shows():
     showForm = AddShow()
-    # movieForm = AddMovie()
     shows = Show.query.filter(Show.user_id == current_user.id).all()
     return render_template("shows.j2", shows=shows, showForm=showForm)
 
-@app.get("/shows/add/")
+@app.post("/shows/")
 @login_required
-def get_add_show():
-    form = AddShow()
-    return render_template("addShow.j2", form=form)
-
-@app.post("/shows/add/")
-@login_required
-def post_add_show():
+def post_shows():
     form = AddShow()
     if form.validate():
+        # get progress select field data
+        formProgress = form.progress.data
+        # check for special inputs
+        if formProgress == "In Progress":
+            temp = ""
+            if form.season.data != None:
+                temp += f"s{form.season.data} "
+            if form.episode.data != None:
+                temp += f"ep{form.episode.data}"
+            # if season or episode field was filled out, change formProgress
+            if temp != "":
+                formProgress = temp
+        elif formProgress == "Custom":
+            formProgress = form.custom.data
+        print("season: ", form.season.data, "ep: ", form.episode.data)
         db.session.add(Show(user_id= current_user.id,title=form.title.data, 
-            rating=round_down(form.rating.data, 2), progress=form.progress.data))
+            rating=round_down(form.rating.data, 2), progress=formProgress))
         db.session.commit()
         return redirect(url_for("get_shows"))
     else:
         for field, error in form.errors.items():
             flash(f"{field}: {error}")
-        return redirect(url_for('get_add_show'))
+        return redirect(url_for('get_shows'))
 
 @app.get("/register/")
 def get_register():
