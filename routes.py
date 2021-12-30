@@ -60,8 +60,10 @@ def home():
 @app.get("/shows/")
 @login_required
 def get_shows():
+    showForm = AddShow()
+    # movieForm = AddMovie()
     shows = Show.query.filter(Show.user_id == current_user.id).all()
-    return render_template("shows.j2", shows=shows)
+    return render_template("shows.j2", shows=shows, showForm=showForm)
 
 @app.get("/shows/add/")
 @login_required
