@@ -51,6 +51,23 @@ class Show(db.Model):
     rating = db.Column(db.Float, nullable=True)
     progress = db.Column(db.Unicode, nullable=False)
 
+class Movie(db.Model):
+    __tablename__ = "Movies"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("Users.id"))
+    title = db.Column(db.Unicode, nullable=False)
+    rating = db.Column(db.Float, nullable=True)
+    progress = db.Column(db.Unicode, nullable=False)
+
+class Text(db.Model):
+    __tablename__ = "Texts"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("Users.id"))
+    title = db.Column(db.Unicode, nullable=False)
+    rating = db.Column(db.Float, nullable=True)
+    progress = db.Column(db.Unicode, nullable=False)
+    type = db.Column(db.Unicode, nullable=False)
+
 # db.drop_all()
 # db.create_all()
 
