@@ -63,7 +63,7 @@ def home():
 def get_shows():
     showForm = AddShow()
     shows = Show.query.filter(Show.user_id == current_user.id).all()
-    return render_template("shows.j2", shows=shows, showForm=showForm)
+    return render_template("shows.j2", shows=shows, showForm=showForm, current_user=current_user)
 
 @app.post("/shows/")
 @login_required
@@ -97,7 +97,8 @@ def post_shows():
 @app.get("/register/")
 def get_register():
     form = RegisterForm()
-    return render_template("register.j2", form=form, loginLink=url_for('get_login'))
+    return render_template("register.j2", form=form, loginLink=url_for('get_login'), 
+        current_user=current_user)
 
 @app.post("/register/")
 def post_register():
@@ -122,7 +123,8 @@ def post_register():
 @app.get("/login/")
 def get_login():
     form = LoginForm()
-    return render_template("login.j2", form=form, registerLink=url_for('get_register'))
+    return render_template("login.j2", form=form, registerLink=url_for('get_register'),
+        current_user=current_user)
 
 @app.post("/login/")
 def post_login():
@@ -172,7 +174,7 @@ def post_changeUsername():
         # username are both not already being used, create new user
         user.username = form.newUsername.data
         db.session.commit()
-        return render_template("profile.j2", current_user=current_user, form=form)
+        return redirect(url_for("get_profile"))
     else:
         for field, error in form.errors.items():
             flash(f"{field}: {error}")
@@ -180,6 +182,6 @@ def post_changeUsername():
 
 @login_required
 @app.route("/profile/")
-def profile():
+def get_profile():
     return render_template("profile.j2", current_user=current_user)
 

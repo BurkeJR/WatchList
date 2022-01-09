@@ -10,47 +10,26 @@
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.bundle.js'></script>
         <script src="/static/scripts/search.js"></script>
-        <script src="/static/scripts/addShowCheck.js"></script>
+        <script src="/static/scripts/addModalCheck.js"></script>
         <link rel="stylesheet" href= "/static/styles/watchList.css">
     </head>
 
-    <header>
-        <div class="container">
-            {% for message in get_flashed_messages() %}
-            <div class="alert alert-warning">
-                <button type="button" class="close" data-bs-dismiss="alert"> 
-                    &times;
-                </button>
-                {{ message }}
-            </div>
-            {% endfor %}
-        </div>
-    </header>
-
     <body>
-        <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/home/"> Watch List </a>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/home/"> Home </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/shows/"> Shows </a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/profile/"> Profile </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/logout/"> Logout </a>
-                        </li>
-                    </ul>
+        <header>
+            {% include "nav.j2" %}
+            <div class="container">
+                {% for message in get_flashed_messages() %}
+                <div class="alert">
+                    <button type="button" class="closebtn" data-bs-dismiss="alert"> 
+                        &times;
+                    </button>
+                    {{ message }}
                 </div>
+                {% endfor %}
             </div>
-        </nav>
+        </header>
+        
+
 
         <main class="container-fluid m-1">
             <div class="container-fluid">

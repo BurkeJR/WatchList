@@ -11,38 +11,10 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/home/"> AniList </a>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/home/"> Home </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/shows/"> Shows </a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ms-auto">
-                        {% if current_user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="/profile/"> Profile </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/logout/">Logout</a>
-                        </li>
-                        {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="/register/">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/login/">Login</a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-        </nav>
+
+        <header>
+            {% include "nav.j2" %}
+        </header>
 
         <br/>
         <h3> There will be home page things here eventually </h3>

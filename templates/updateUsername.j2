@@ -10,27 +10,9 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/home/"> Watch List </a>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/home/"> Home </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/shows/"> Shows </a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/logout/">Logout</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        
         <header>
+            {% include "nav.j2" %}
             <div class="container">
                 {% for message in get_flashed_messages() %}
                 <div class="alert alert-warning">
@@ -42,6 +24,12 @@
                 {% endfor %}
             </div>
         </header>
+
+        <script>
+            $(function(){
+                $("#nav-placeholder").load("/static/html/nav.html");
+            });
+        </script> 
 
         <main>
             <div class="container text-center mt-3">
