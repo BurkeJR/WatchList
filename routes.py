@@ -2,6 +2,8 @@
 @author: John Burke
 """
 
+# -------------------- INIT --------------------
+
 # imports
 from logging import log
 from flask import Flask, request, render_template, redirect, url_for, flash
@@ -44,11 +46,15 @@ db = SQLAlchemy(app)
 app.login_manager = LoginManager()
 app.login_manager.login_view = 'get_login'
 
-
 @app.login_manager.user_loader
 def load_user(uid):
     return User.query.get(int(uid))
 
+# -------------------- INIT --------------------
+
+# ##################################################
+
+# -------------------- INDEX/HOME --------------------
 
 @app.route("/")
 def index():
@@ -57,6 +63,12 @@ def index():
 @app.route("/home/")
 def home():
     return render_template("home.j2", current_user=current_user)
+
+# -------------------- INDEX/HOME --------------------
+
+# ##################################################
+
+# -------------------- MAIN PAGES --------------------
 
 @app.get("/shows/")
 @login_required
@@ -94,6 +106,12 @@ def post_shows():
             flash(f"{field}: {error}")
         return redirect(url_for('get_shows'))
 
+# -------------------- MAIN PAGES --------------------
+
+# ##################################################
+
+# -------------------- ACCOUNT MANAGEMENT --------------------
+
 @app.get("/register/")
 def get_register():
     form = RegisterForm()
@@ -118,7 +136,6 @@ def post_register():
         for field, error in form.errors.items():
             flash(f"{field}: {error}")
         return redirect(url_for('get_register'))
-
 
 @app.get("/login/")
 def get_login():
@@ -185,3 +202,4 @@ def post_changeUsername():
 def get_profile():
     return render_template("profile.j2", current_user=current_user)
 
+# -------------------- ACCOUNT MANAGEMENT --------------------
