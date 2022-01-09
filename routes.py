@@ -5,7 +5,6 @@
 # -------------------- INIT --------------------
 
 # imports
-from logging import log
 from flask import Flask, request, render_template, redirect, url_for, flash
 from flask_login import LoginManager, login_required
 from flask_login.utils import login_user, logout_user, current_user
@@ -106,6 +105,28 @@ def post_shows():
             flash(f"{field}: {error}")
         return redirect(url_for('get_shows'))
 
+
+@app.get("/movies/")
+@login_required
+def get_movies():
+    pass
+
+@app.post("/movies/")
+@login_required
+def post_movies():
+    pass
+
+
+@app.get("/texts/")
+@login_required
+def get_texts():
+    pass
+
+@app.post("/texts/")
+@login_required
+def post_texts():
+    pass
+
 # -------------------- MAIN PAGES --------------------
 
 # ##################################################
@@ -136,6 +157,7 @@ def post_register():
         for field, error in form.errors.items():
             flash(f"{field}: {error}")
         return redirect(url_for('get_register'))
+
 
 @app.get("/login/")
 def get_login():
@@ -168,18 +190,22 @@ def post_login():
             flash(f"{field}: {error}")
         return redirect(url_for('get_login'))
 
+
 @app.get('/logout/')
 @login_required
 def get_logout():
     logout_user()
     return redirect(url_for('index'))
 
+
 @app.get("/changeUsername/")
+@login_required
 def get_changeUsername():
     form = UpdateUsername()
     return render_template("updateUsername.j2", current_user=current_user, form=form)
 
 @app.post("/changeUsername/")
+@login_required
 def post_changeUsername():
     form = UpdateUsername()
     if form.validate():
@@ -196,6 +222,7 @@ def post_changeUsername():
         for field, error in form.errors.items():
             flash(f"{field}: {error}")
         return redirect(url_for('get_changeUsername'))
+
 
 @login_required
 @app.route("/profile/")
