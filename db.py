@@ -46,6 +46,7 @@ class User(UserMixin, db.Model):
 class Show(db.Model):
     __tablename__ = "Shows"
     id = db.Column(db.Integer, primary_key=True)
+    imdbID = db.Column(db.Unicode, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("Users.id"))
     title = db.Column(db.Unicode, nullable=False)
     rating = db.Column(db.Float, nullable=True)
@@ -54,6 +55,7 @@ class Show(db.Model):
 class Movie(db.Model):
     __tablename__ = "Movies"
     id = db.Column(db.Integer, primary_key=True)
+    imdbID = db.Column(db.Unicode, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("Users.id"))
     title = db.Column(db.Unicode, nullable=False)
     rating = db.Column(db.Float, nullable=True)
