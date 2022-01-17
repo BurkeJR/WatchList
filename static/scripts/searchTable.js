@@ -1,3 +1,4 @@
+// listener for when the document loads
 window.addEventListener("DOMContentLoaded", function() {
 
     const searchBar = document.getElementById("search-bar");
@@ -11,6 +12,7 @@ function search() {
     let matchFound = false;
 	const table = document.querySelector("table");
 
+	// reset all rows to unhidden
     for (let r = 1; r < table.rows.length; r++){
 		table.rows[r].classList.remove("hide");
 	}
@@ -28,6 +30,7 @@ function search() {
 					matchFound = true;
 				}
 			}
+			// if row does not have a match, hide it
 			if (!matchFound){
 				row.classList.add("hide");
 			}
