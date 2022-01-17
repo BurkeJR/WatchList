@@ -48,7 +48,7 @@ class Show(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     imdbID = db.Column(db.Unicode, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("Users.id"))
-    title = db.Column(db.Unicode, nullable=False)
+    title = db.Column(db.Unicode, nullable=True)
     rating = db.Column(db.Float, nullable=True)
     progress = db.Column(db.Unicode, nullable=False)
 
@@ -57,7 +57,7 @@ class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     imdbID = db.Column(db.Unicode, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("Users.id"))
-    title = db.Column(db.Unicode, nullable=False)
+    title = db.Column(db.Unicode, nullable=True)
     rating = db.Column(db.Float, nullable=True)
     progress = db.Column(db.Unicode, nullable=False)
 
