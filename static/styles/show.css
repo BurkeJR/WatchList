@@ -1,4 +1,4 @@
-table {
+/* table {
 	border-collapse: collapse;
 	padding: 2rem;
 }
@@ -9,10 +9,18 @@ td, th {
 	border-style: solid;
 	border-color: black;
 	border-width: 2px;
-}
+} */
 
 .hide {
 	display: none
+}
+
+.blue-button {
+    background-color: #0B6FA4;
+}
+
+.blue-button:hover, .blue-button:focus {
+    background-color: #1184c2;
 }
 
 

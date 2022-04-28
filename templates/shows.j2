@@ -14,6 +14,7 @@
         <script src="/static/scripts/addModalCheck.js"></script>
         <link rel="stylesheet" href="/static/styles/watchList.css">
         <link rel="stylesheet" href="/static/styles/show.css">
+        <link rel="stylesheet" href="/static/styles/table.css">
     </head>
 
     <body>
@@ -34,37 +35,43 @@
         <main class="container-fluid m-1">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-6">
-                        <label for="search-by"> Search By: </label>
+                    <div class="col-sm-6">
+                        {# <label for="search-by"> Search By: </label>
                         <select name="search-by" id="search-by">
                             <option value="all"> All </option>
                             <option value="title"> Title </option>
                             <option value="rating"> Rating </option>
                             <option value="progress"> Progress </option>
-                        </select>
+                        </select> #}
                         <input name="search-bar" id="search-bar" type="text" placeholder="Search">
                     </div>
-                    <div class="col-md-6">
-                        <button id="btnStart" type="button" class="btn btn-primary" data-toggle="modal" 
+                    <div class="col-sm-6">
+                        <button id="btnStart" type="button" class="btn btn-primary blue-button" data-toggle="modal" 
                             data-target="#showFormModal"> Add Show </button>
                     </div>
                 </div>
-            </div>       
-            <br>
-            <table>
-                <tr>
-                    <th> Title </th>
-                    <th> Rating(_/10) </th>
-                    <th> Progress </th>
-                </tr>
-                {% for show in shows %}
-                <tr>
-                    <td> {{show.title}} </td>
-                    <td> {{show.rating}} </td>
-                    <td> {{show.progress}} </td>
-                </tr>
-                {% endfor %}
-            </table>
+            </div>      
+            <br> 
+            <div>
+                <table class="paleBlueRows">
+                    <thead>
+                        <tr>
+                            <th> Title </th>
+                            <th> Rating(_/10) </th>
+                            <th> Progress </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for show in shows %}
+                        <tr>
+                            <td> {{show.title}} </td>
+                            <td> {{show.rating}} </td>
+                            <td> {{show.progress}} </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Modal for adding show -->
             <div class="modal fade" id="showFormModal" tabindex="-1" role="dialog" aria-labelledby="showFormModalLabel" aria-hidden="true">
@@ -82,7 +89,7 @@
                                 {{ showForm.hidden_tag() }}
                                 <div class="form-label"> {{ showForm.title.label }} {{ showForm.title(id="showTitle") }} </div>
                                 {# <div id="imdbSearchResults" class="autocom-box"> </div> #}
-
+                                
                                 <div class="form-label"> {{ showForm.rating.label }} {{ showForm.rating(id="showRating") }} </div>
                                 <div class="form-label"> {{ showForm.progress.label }} {{ showForm.progress(id="showProgress") }} </div>
 
@@ -91,14 +98,14 @@
                                     <div class="form-label"> {{ showForm.episode.label }} {{ showForm.episode(id="showEpisode") }} </div>
                                 </div>
 
-                                <div id="customProgress" class="hide"> {{ showForm.custom.label }} {{ showForm.custom() }} </div>
+                                <div id="customProgress" class="form-label hide"> {{ showForm.custom.label }} {{ showForm.custom() }} </div>
 
                                 
                             </div>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary blue-button">Submit</button>
                             </div>
                         </form>
                     </div>
