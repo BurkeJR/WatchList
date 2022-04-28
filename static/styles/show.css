@@ -1,0 +1,33 @@
+table {
+	border-collapse: collapse;
+	padding: 2rem;
+}
+
+td, th {
+	padding: 5px;
+	margin: 0px;
+	border-style: solid;
+	border-color: black;
+	border-width: 2px;
+}
+
+.hide {
+	display: none
+}
+
+
+.autocom-box li{
+    list-style: none;
+    padding: 8px 12px;
+    display: none;
+    width: 100%;
+    cursor: default;
+    border-radius: 3px;
+    display: block;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.autocom-box li:hover{
+    background: #efefef;
+}

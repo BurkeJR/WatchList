@@ -9,9 +9,11 @@
         <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.bundle.js'></script>
-        <script src="/static/scripts/search.js"></script>
+        <script src="/static/scripts/searchTable.js"></script>
+        {# <script src="/static/scripts/imdbSearch.js"></script> #}
         <script src="/static/scripts/addModalCheck.js"></script>
-        <link rel="stylesheet" href= "/static/styles/watchList.css">
+        <link rel="stylesheet" href="/static/styles/watchList.css">
+        <link rel="stylesheet" href="/static/styles/show.css">
     </head>
 
     <body>
@@ -28,8 +30,6 @@
                 {% endfor %}
             </div>
         </header>
-        
-
 
         <main class="container-fluid m-1">
             <div class="container-fluid">
@@ -45,13 +45,12 @@
                         <input name="search-bar" id="search-bar" type="text" placeholder="Search">
                     </div>
                     <div class="col-md-6">
-                        <!-- <a href="/shows/add/" class="btn btn-info" role="button"> Add Show </a> -->
                         <button id="btnStart" type="button" class="btn btn-primary" data-toggle="modal" 
                             data-target="#showFormModal"> Add Show </button>
                     </div>
                 </div>
             </div>       
-
+            <br>
             <table>
                 <tr>
                     <th> Title </th>
@@ -77,17 +76,19 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="addShowForm" action="#" method="POST">
+                        <form id="addShowForm" action="#" method="POST" autocomplete="off">
 
                             <div>
                                 {{ showForm.hidden_tag() }}
                                 <div class="form-label"> {{ showForm.title.label }} {{ showForm.title(id="showTitle") }} </div>
+                                {# <div id="imdbSearchResults" class="autocom-box"> </div> #}
+
                                 <div class="form-label"> {{ showForm.rating.label }} {{ showForm.rating(id="showRating") }} </div>
                                 <div class="form-label"> {{ showForm.progress.label }} {{ showForm.progress(id="showProgress") }} </div>
 
                                 <div id="inProgressDetails" class="hide">
-                                    <div> {{ showForm.season.label }} {{ showForm.season(id="showSeason") }} </div>
-                                    <div> {{ showForm.episode.label }} {{ showForm.episode(id="showEpisode") }} </div>
+                                    <div class="form-label"> {{ showForm.season.label }} {{ showForm.season(id="showSeason") }} </div>
+                                    <div class="form-label"> {{ showForm.episode.label }} {{ showForm.episode(id="showEpisode") }} </div>
                                 </div>
 
                                 <div id="customProgress" class="hide"> {{ showForm.custom.label }} {{ showForm.custom() }} </div>

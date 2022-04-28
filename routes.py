@@ -18,6 +18,8 @@ from forms import UpdateUsername
 from forms import AddShow
 from db import User
 from db import Show
+from db import Movie
+from db import Text
 import math
 
 # round down function
